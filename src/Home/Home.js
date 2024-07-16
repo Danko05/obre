@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import men from '../foto/men.png';
-import Sign_in_square from '../foto/Sign_in_squre.svg';
-import home from '../foto/Home.png';
-import job from '../foto/Order.svg';
-import trashIcon from '../foto/Trash.svg';
-import editIcon from '../foto/Edit.png';
+import React, { useState, useEffect } from 'react';
+import men from '../photo/men.png';
+import Sign_in_square from '../photo/Sign_in_squre.svg';
+import home from '../photo/Home.png';
+import job from '../photo/Order.svg';
+import trashIcon from '../photo/Trash.svg';
+import editIcon from '../photo/Edit.png';
 import './Home.css';
+
+const statuses = ['pending', 'completed'];
+const engineers = ['John Doe', 'Jane Smith', 'Michael Brown', 'Emily Davis'];
+const jobTypes = ['Repair', 'Installation', 'Maintenance', 'Inspection'];
 
 function Home({ onLogout }) {
     const [showJobText, setShowJobText] = useState(false);
@@ -13,8 +17,23 @@ function Home({ onLogout }) {
     const [jobRequests, setJobRequests] = useState([]);
     const [showAddRequest, setShowAddRequest] = useState(false);
     const [showEditRequest, setShowEditRequest] = useState(false);
-    const [newRequest, setNewRequest] = useState({ firstName: '', lastName: '', jobTitle: '', jobDescription: '' });
+    const [newRequest, setNewRequest] = useState({
+        id: '',
+        job_type: jobTypes[0],
+        status: statuses[0],
+        description: '',
+        assigned_engineer: engineers[0],
+    });
     const [currentEditIndex, setCurrentEditIndex] = useState(null);
+
+    useEffect(() => {
+        const storedRequests = JSON.parse(localStorage.getItem('jobRequests')) || [];
+        setJobRequests(storedRequests);
+    }, []);
+
+    const saveToLocalStorage = (requests) => {
+        localStorage.setItem('jobRequests', JSON.stringify(requests));
+    };
 
     const handleJobRequest = () => {
         setShowJobText(true);
@@ -31,18 +50,27 @@ function Home({ onLogout }) {
     };
 
     const handleAddNewRequest = () => {
+        setNewRequest({
+            id: jobRequests.length + 1,
+            job_type: jobTypes[0],
+            status: statuses[0],
+            description: '',
+            assigned_engineer: engineers[0],
+        });
         setShowAddRequest(true);
     };
 
     const handleSaveRequest = () => {
-        setJobRequests([...jobRequests, newRequest]);
-        setNewRequest({ firstName: '', lastName: '', jobTitle: '', jobDescription: '' });
+        const updatedRequests = [...jobRequests, newRequest];
+        setJobRequests(updatedRequests);
+        saveToLocalStorage(updatedRequests);
         setShowAddRequest(false);
     };
 
     const handleDeleteRequest = (index) => {
         const updatedRequests = jobRequests.filter((_, i) => i !== index);
         setJobRequests(updatedRequests);
+        saveToLocalStorage(updatedRequests);
     };
 
     const handleEditRequest = (index) => {
@@ -56,10 +84,21 @@ function Home({ onLogout }) {
             index === currentEditIndex ? newRequest : request
         );
         setJobRequests(updatedRequests);
+        saveToLocalStorage(updatedRequests);
         setShowEditRequest(false);
-        setNewRequest({ firstName: '', lastName: '', jobTitle: '', jobDescription: '' });
+        setNewRequest({
+            id: '',
+            job_type: jobTypes[0],
+            status: statuses[0],
+            description: '',
+            assigned_engineer: engineers[0],
+        });
         setCurrentEditIndex(null);
     };
+
+    const totalJobs = jobRequests.length;
+    const pendingJobs = jobRequests.filter(request => request.status === 'pending').length;
+    const completedJobs = jobRequests.filter(request => request.status === 'completed').length;
 
     return (
         <div className="home_section">
@@ -85,7 +124,14 @@ function Home({ onLogout }) {
                 </div>
             </div>
             <div className="container_job">
-                {showHomeText && <h1>Привіт ще HOME</h1>}
+                {showHomeText && (
+                    <div className="dashboard">
+                        <h1>Dashboard</h1>
+                        <p>Total Jobs: {totalJobs}</p>
+                        <p>Pending Jobs: {pendingJobs}</p>
+                        <p>Completed Jobs: {completedJobs}</p>
+                    </div>
+                )}
                 {showJobText && (
                     <>
                         <h1>Job Request List</h1>
@@ -93,9 +139,11 @@ function Home({ onLogout }) {
                         <div className="cards-container">
                             {jobRequests.map((request, index) => (
                                 <div className="card" key={index}>
-                                    <h2>{request.firstName} {request.lastName}</h2>
-                                    <h3>{request.jobTitle}</h3>
-                                    <p>{request.jobDescription}</p>
+                                    <h2>Job ID: {request.id}</h2>
+                                    <h3>Type: {request.job_type}</h3>
+                                    <p>Status: {request.status}</p>
+                                    <p>Description: {request.description}</p>
+                                    <p>Assigned Engineer: {request.assigned_engineer}</p>
                                     <div>
                                         <img src={trashIcon} alt="Delete" onClick={() => handleDeleteRequest(index)} />
                                         <img src={editIcon} alt="Edit" onClick={() => handleEditRequest(index)} />
@@ -111,28 +159,39 @@ function Home({ onLogout }) {
                     <h2>Add New Job Request</h2>
                     <input
                         type="text"
-                        placeholder="First Name"
-                        value={newRequest.firstName}
-                        onChange={(e) => setNewRequest({ ...newRequest, firstName: e.target.value })}
+                        placeholder="Job ID"
+                        value={newRequest.id}
+                        readOnly
                     />
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        value={newRequest.lastName}
-                        onChange={(e) => setNewRequest({ ...newRequest, lastName: e.target.value })}
+                    <select
+                        value={newRequest.job_type}
+                        onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
+                    >
+                        {jobTypes.map((type, index) => (
+                            <option key={index} value={type}>{type}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={newRequest.status}
+                        onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
+                    >
+                        {statuses.map((status, index) => (
+                            <option key={index} value={status}>{status}</option>
+                        ))}
+                    </select>
+                    <textarea
+                        placeholder="Description"
+                        value={newRequest.description}
+                        onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
                     />
-                    <input
-                        type="text"
-                        placeholder="Job Title"
-                        value={newRequest.jobTitle}
-                        onChange={(e) => setNewRequest({ ...newRequest, jobTitle: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Job Description"
-                        value={newRequest.jobDescription}
-                        onChange={(e) => setNewRequest({ ...newRequest, jobDescription: e.target.value })}
-                    />
+                    <select
+                        value={newRequest.assigned_engineer}
+                        onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
+                    >
+                        {engineers.map((engineer, index) => (
+                            <option key={index} value={engineer}>{engineer}</option>
+                        ))}
+                    </select>
                     <button onClick={handleSaveRequest}>Save</button>
                 </div>
             )}
@@ -141,28 +200,39 @@ function Home({ onLogout }) {
                     <h2>Edit Job Request</h2>
                     <input
                         type="text"
-                        placeholder="First Name"
-                        value={newRequest.firstName}
-                        onChange={(e) => setNewRequest({ ...newRequest, firstName: e.target.value })}
+                        placeholder="Job ID"
+                        value={newRequest.id}
+                        readOnly
                     />
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        value={newRequest.lastName}
-                        onChange={(e) => setNewRequest({ ...newRequest, lastName: e.target.value })}
+                    <select
+                        value={newRequest.job_type}
+                        onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
+                    >
+                        {jobTypes.map((type, index) => (
+                            <option key={index} value={type}>{type}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={newRequest.status}
+                        onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
+                    >
+                        {statuses.map((status, index) => (
+                            <option key={index} value={status}>{status}</option>
+                        ))}
+                    </select>
+                    <textarea
+                        placeholder="Description"
+                        value={newRequest.description}
+                        onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
                     />
-                    <input
-                        type="text"
-                        placeholder="Job Title"
-                        value={newRequest.jobTitle}
-                        onChange={(e) => setNewRequest({ ...newRequest, jobTitle: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Job Description"
-                        value={newRequest.jobDescription}
-                        onChange={(e) => setNewRequest({ ...newRequest, jobDescription: e.target.value })}
-                    />
+                    <select
+                        value={newRequest.assigned_engineer}
+                        onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
+                    >
+                        {engineers.map((engineer, index) => (
+                            <option key={index} value={engineer}>{engineer}</option>
+                        ))}
+                    </select>
                     <button onClick={handleUpdateRequest}>Update</button>
                 </div>
             )}

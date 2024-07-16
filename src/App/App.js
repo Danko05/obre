@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Authorization from '../ authorization/authorization';
+import Authorization from '../authorization/authorization';
 import Home from '../Home/Home';
-import '../ authorization/authorization.css';
+import '../authorization/authorization.css';
 import '../Home/Home.css';
 import '../App/App.css';
 
