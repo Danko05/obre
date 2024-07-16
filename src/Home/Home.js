@@ -125,12 +125,23 @@ function Home({ onLogout }) {
             </div>
             <div className="container_job">
                 {showHomeText && (
-                    <div className="dashboard">
-                        <h1>Dashboard</h1>
-                        <p>Total Jobs: {totalJobs}</p>
-                        <p>Pending Jobs: {pendingJobs}</p>
-                        <p>Completed Jobs: {completedJobs}</p>
-                    </div>
+                        <div className="dashboard">
+                            <h1>Dashboard</h1>
+                            <div className="dashboard_score">
+                                <div className='Total'>
+                                    Total Jobs:
+                                    <div>{totalJobs}</div>
+                                </div>
+                                <div className='Pending'>
+                                    Pending Jobs:
+                                    <div>{pendingJobs}</div>
+                                </div>
+                                <div className='Completed'>
+                                    Completed Jobs:
+                                    <div>{completedJobs}</div>
+                                </div>
+                            </div>
+                        </div>
                 )}
                 {showJobText && (
                     <>
@@ -155,86 +166,92 @@ function Home({ onLogout }) {
                 )}
             </div>
             {showAddRequest && (
-                <div className="add-request-modal">
-                    <h2>Add New Job Request</h2>
-                    <input
-                        type="text"
-                        placeholder="Job ID"
-                        value={newRequest.id}
-                        readOnly
-                    />
-                    <select
-                        value={newRequest.job_type}
-                        onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
-                    >
-                        {jobTypes.map((type, index) => (
-                            <option key={index} value={type}>{type}</option>
-                        ))}
-                    </select>
-                    <select
-                        value={newRequest.status}
-                        onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
-                    >
-                        {statuses.map((status, index) => (
-                            <option key={index} value={status}>{status}</option>
-                        ))}
-                    </select>
-                    <textarea
-                        placeholder="Description"
-                        value={newRequest.description}
-                        onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
-                    />
-                    <select
-                        value={newRequest.assigned_engineer}
-                        onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
-                    >
-                        {engineers.map((engineer, index) => (
-                            <option key={index} value={engineer}>{engineer}</option>
-                        ))}
-                    </select>
-                    <button onClick={handleSaveRequest}>Save</button>
-                </div>
+                <>
+                    <div className="modal-backdrop" onClick={() => setShowAddRequest(false)}></div>
+                    <div className="add-request-modal">
+                        <h2>Add New Job Request</h2>
+                        <input
+                            type="text"
+                            placeholder="Job ID"
+                            value={newRequest.id}
+                            readOnly
+                        />
+                        <select
+                            value={newRequest.job_type}
+                            onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
+                        >
+                            {jobTypes.map((type, index) => (
+                                <option key={index} value={type}>{type}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={newRequest.status}
+                            onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
+                        >
+                            {statuses.map((status, index) => (
+                                <option key={index} value={status}>{status}</option>
+                            ))}
+                        </select>
+                        <textarea
+                            placeholder="Description"
+                            value={newRequest.description}
+                            onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
+                        />
+                        <select
+                            value={newRequest.assigned_engineer}
+                            onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
+                        >
+                            {engineers.map((engineer, index) => (
+                                <option key={index} value={engineer}>{engineer}</option>
+                            ))}
+                        </select>
+                        <button onClick={handleSaveRequest}>Save</button>
+                    </div>
+                </>
             )}
             {showEditRequest && (
-                <div className="add-request-modal">
-                    <h2>Edit Job Request</h2>
-                    <input
-                        type="text"
-                        placeholder="Job ID"
-                        value={newRequest.id}
-                        readOnly
-                    />
-                    <select
-                        value={newRequest.job_type}
-                        onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
-                    >
-                        {jobTypes.map((type, index) => (
-                            <option key={index} value={type}>{type}</option>
-                        ))}
-                    </select>
-                    <select
-                        value={newRequest.status}
-                        onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
-                    >
-                        {statuses.map((status, index) => (
-                            <option key={index} value={status}>{status}</option>
-                        ))}
-                    </select>
-                    <textarea
-                        placeholder="Description"
-                        value={newRequest.description}
-                        onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
-                    />
-                    <select
-                        value={newRequest.assigned_engineer}
-                        onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
-                    >
-                        {engineers.map((engineer, index) => (
-                            <option key={index} value={engineer}>{engineer}</option>
-                        ))}
-                    </select>
-                    <button onClick={handleUpdateRequest}>Update</button>
-                </div>
+                <>
+                    <div className="modal-backdrop" onClick={() => setShowEditRequest(false)}></div>
+                    <div className="add-request-modal">
+                        <h2>Edit Job Request</h2>
+                        <input
+                            type="text"
+                            placeholder="Job ID"
+                            value={newRequest.id}
+                            readOnly
+                        />
+                        <select
+                            value={newRequest.job_type}
+                            onChange={(e) => setNewRequest({ ...newRequest, job_type: e.target.value })}
+                        >
+                            {jobTypes.map((type, index) => (
+                                <option key={index} value={type}>{type}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={newRequest.status}
+                            onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
+                        >
+                            {statuses.map((status, index) => (
+                                <option key={index} value={status}>{status}</option>
+                            ))}
+                        </select>
+                        <textarea
+                            placeholder="Description"
+                            value={newRequest.description}
+                            onChange={(e) => setNewRequest({ ...newRequest, description: e.target.value })}
+                        />
+                        <select
+                            value={newRequest.assigned_engineer}
+                            onChange={(e) => setNewRequest({ ...newRequest, assigned_engineer: e.target.value })}
+                        >
+                            {engineers.map((engineer, index) => (
+                                <option key={index} value={engineer}>{engineer}</option>
+                            ))}
+                        </select>
+                        <button onClick={handleUpdateRequest}>Update</button>
+                    </div>
+                </>
             )}
         </div>
     );

@@ -75,7 +75,7 @@
 
 .container_home{
     background-color: #F2EAE1;
-    height: 100vh;
+
     width: 27%;
 
 }
@@ -244,4 +244,207 @@ background-color: #E09E00}
 .navigation button.active {
     color: black;
     background-color: #FEAF00;
+}
+.dashboard {
+    background-color: #E5E5E5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.dashboard_score {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.dashboard_score > div {
+    flex: 1;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard_score > div + div {
+    margin-left: 10px;
+}
+.dashboard_score > div > div {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.dashboard_score .Total {
+    background-color: #FEAF00;
+    color: white;
+}
+
+.dashboard_score .Pending {
+    background-color: #F8D442;
+    color: #333;
+}
+
+.dashboard_score .Completed {
+    background-color: #58B368;
+    color: white;
+}
+
+.Total,
+.Pending,
+.Completed
+{
+    font-size: 30px;
+    margin: 30px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+}
+.Total img{
+    width: 60px;
+}
+
+
+/* Home.css */
+
+/* Основні стилі для модального вікна */
+.add-request-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+}
+
+/* Заголовок модального вікна */
+.add-request-modal h2 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Стилі для полів вводу та селектів */
+.add-request-modal input,
+.add-request-modal select,
+.add-request-modal textarea {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Стилі для textarea */
+.add-request-modal textarea {
+    height: 100px;
+    resize: none;
+}
+
+/* Кнопка збереження */
+.add-request-modal button {
+    width: 100%;
+    padding: 10px;
+    background:  #FEAF00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+
+/* Задній фон для затемнення при відкритті модального вікна */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 40px);
+    height: 280px;
+    margin-left: 120px;
+
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+.card img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.card img:hover {
+    transform: scale(1.2);
+}
+
+.card div {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.card button {
+    background: #FEAF00;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.card button:hover {
+    background: #E09E00;
 }
