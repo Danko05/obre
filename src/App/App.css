@@ -1,0 +1,9 @@
+body {
+  background: linear-gradient(to left, yellow, orange);
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  height: 72vh;
+}
