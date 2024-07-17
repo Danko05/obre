@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import men from '../photo/men.png';
 import Sign_in_square from '../photo/Sign_in_squre.svg';
 import home from '../photo/Home.png';
@@ -109,14 +110,14 @@ function Home({ onLogout }) {
                     <h3>Admin</h3>
                 </div>
                 <div className="navigation">
-                    <button className={`navigation_home ${showHomeText ? 'active' : ''}`} onClick={handleHome}>
+                    <Link to="/" className={`navigation_home ${showHomeText ? 'active' : ''}`} onClick={handleHome}>
                         <img src={home} alt="Home" />
                         Home
-                    </button>
-                    <button className={`navigation_vacation ${showJobText ? 'active' : ''}`} onClick={handleJobRequest}>
+                    </Link>
+                    <Link to="/job-requests" className={`navigation_vacation ${showJobText ? 'active' : ''}`} onClick={handleJobRequest}>
                         <img src={job} alt="Job Request" />
                         Job Request
-                    </button>
+                    </Link>
                     <button className="navigation_log_out" onClick={handleLogout}>
                         Log out
                         <img src={Sign_in_square} alt="Sign Out" />
@@ -125,23 +126,23 @@ function Home({ onLogout }) {
             </div>
             <div className="container_job">
                 {showHomeText && (
-                        <div className="dashboard">
-                            <h1>Dashboard</h1>
-                            <div className="dashboard_score">
-                                <div className='Total'>
-                                    Total Jobs:
-                                    <div>{totalJobs}</div>
-                                </div>
-                                <div className='Pending'>
-                                    Pending Jobs:
-                                    <div>{pendingJobs}</div>
-                                </div>
-                                <div className='Completed'>
-                                    Completed Jobs:
-                                    <div>{completedJobs}</div>
-                                </div>
+                    <div className="dashboard">
+                        <h1>Dashboard</h1>
+                        <div className="dashboard_score">
+                            <div className='Total'>
+                                Total Jobs:
+                                <div>{totalJobs}</div>
+                            </div>
+                            <div className='Pending'>
+                                Pending Jobs:
+                                <div>{pendingJobs}</div>
+                            </div>
+                            <div className='Completed'>
+                                Completed Jobs:
+                                <div>{completedJobs}</div>
                             </div>
                         </div>
+                    </div>
                 )}
                 {showJobText && (
                     <>

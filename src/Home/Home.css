@@ -32,8 +32,8 @@
 
 }
 
-.navigation_home,
-.navigation_vacation{
+.navigation_home a,
+.navigation_vacation a{
     font-size: 18px;
     display: flex;
     align-items: center;
@@ -48,16 +48,20 @@
     align-items: center;
     margin-left: 90px;
     margin-top: 150px;
+    background-color: #F2EAE1;
 
 }
 
-.navigation button{
+.navigation a{
     padding: 27px;
     color: black;
     background-color: #F2EAE1;
     width: 80%;
     height: 7px;
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center
 
 }
 
@@ -309,9 +313,7 @@ background-color: #E09E00}
 }
 
 
-/* Home.css */
 
-/* Основні стилі для модального вікна */
 .add-request-modal {
     position: fixed;
     top: 50%;
@@ -326,14 +328,14 @@ background-color: #E09E00}
     max-width: 90%;
 }
 
-/* Заголовок модального вікна */
+
 .add-request-modal h2 {
     margin-top: 0;
     font-size: 24px;
     text-align: center;
 }
 
-/* Стилі для полів вводу та селектів */
+
 .add-request-modal input,
 .add-request-modal select,
 .add-request-modal textarea {
@@ -346,13 +348,13 @@ background-color: #E09E00}
     box-sizing: border-box;
 }
 
-/* Стилі для textarea */
+
 .add-request-modal textarea {
     height: 100px;
     resize: none;
 }
 
-/* Кнопка збереження */
+
 .add-request-modal button {
     width: 100%;
     padding: 10px;
@@ -367,7 +369,7 @@ background-color: #E09E00}
 
 
 
-/* Задній фон для затемнення при відкритті модального вікна */
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -447,4 +449,7 @@ background-color: #E09E00}
 
 .card button:hover {
     background: #E09E00;
+}
+.navigation a{
+    text-decoration: none;
 }
